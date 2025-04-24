@@ -14,6 +14,7 @@ class Assets {
 
   static const AssetGenImage bg = AssetGenImage('assets/BG.png');
   static const AssetGenImage banner = AssetGenImage('assets/Banner.png');
+  static const AssetGenImage hand = AssetGenImage('assets/Hand.png');
   static const AssetGenImage logo = AssetGenImage('assets/Logo.png');
   static const AssetGenImage logo1 = AssetGenImage('assets/Logo1.png');
   static const AssetGenImage logo2 = AssetGenImage('assets/Logo2.png');
@@ -29,6 +30,7 @@ class Assets {
   static List<AssetGenImage> get values => [
     bg,
     banner,
+    hand,
     logo,
     logo1,
     logo2,

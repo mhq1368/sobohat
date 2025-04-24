@@ -19,6 +19,8 @@ class MatnDoaController extends GetxController {
       matnlist.value =
           (data as List).map((item) => MatnDoaModel.fromJson(item)).toList();
       debugPrint('Namaz List: $matnlist');
+      debugPrint('Namaz List: ${UrlConst.matnList + tid.toString()}');
+      loading.value = false;
     }
   }
 }

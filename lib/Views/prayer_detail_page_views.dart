@@ -5,25 +5,26 @@ import 'package:sobohat/Controllers/detail_namaz_taghebat.dart';
 import 'package:sobohat/Widgets/my_bottom_menu.dart';
 import 'package:sobohat/Widgets/myappbar_widgets.dart';
 import 'package:sobohat/Widgets/myloading.dart';
+import 'package:sobohat/const/device_function.dart';
 import 'package:sobohat/gen/assets.gen.dart';
 import 'package:sobohat/main.dart';
 
-late DetailNamazTaghebatController controller;
+late DetailNamazTaghebatController controllerDetail;
 late int nid;
 late String nname;
 
 class PrayerDetailPage extends StatelessWidget {
   final args = Get.arguments as Map<String, dynamic>;
   PrayerDetailPage({super.key}) {
-    controller = Get.put(DetailNamazTaghebatController());
-    // Get.arguments is used to pass data to this page
+    controllerDetail = Get.put(DetailNamazTaghebatController());
+    // Get.arguments برای گرفتن آرگومان هایی که از صفحه قبل به این صفحه پاس داده شده اند
     nid = args['id'];
     nname = args['name'];
   }
   @override
   Widget build(BuildContext context) {
     var appsize = MediaQuery.of(context);
-    controller.getZekrList(nid);
+    controllerDetail.getZekrList(nid);
 
     return Scaffold(
       appBar: AppBar(
@@ -58,8 +59,9 @@ class PrayerDetailPage extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 4, 75, 61)
-                        .withOpacity(0.12), // پس‌زمینه کم‌رنگ
-                    borderRadius: BorderRadius.circular(15), // گوشه‌های گرد‌تر
+                        .withAlpha(31), // پس‌زمینه کم‌رنگ
+                    borderRadius: BorderRadius.circular(
+                        deviceBasedRadius(context)), // گوشه‌های گرد‌تر
                     border: Border.all(
                       color:
                           const Color.fromARGB(255, 255, 255, 255), // رنگ حاشیه
@@ -67,7 +69,7 @@ class PrayerDetailPage extends StatelessWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.2), // سایه بیشتر
+                        color: Colors.black.withAlpha(51), // سایه بیشتر
                         offset: Offset(0, 8), // موقعیت سایه
                         blurRadius: 15, // شعاع بلور بیشتر
                       ),
@@ -85,11 +87,11 @@ class PrayerDetailPage extends StatelessWidget {
                 )),
             Expanded(
               child: Obx(() {
-                if (controller.loading.value) {
+                if (controllerDetail.loading.value) {
                   return Center(child: mainLoading(appsize.size.height));
                 }
                 return ListView.builder(
-                  itemCount: controller.zekrList.length,
+                  itemCount: controllerDetail.zekrList.length,
                   physics: BouncingScrollPhysics(),
                   padding: EdgeInsets.only(
                       left: appsize.size.width / 10,
@@ -97,13 +99,15 @@ class PrayerDetailPage extends StatelessWidget {
                       top: appsize.size.height / 55,
                       bottom: appsize.size.height / 55),
                   itemBuilder: (context, index) {
-                    final zekr = controller.zekrList[index];
+                    final zekr = controllerDetail.zekrList[index];
                     return GestureDetector(
                       onTap: () {
                         Get.toNamed(AppRoutes.matn, arguments: {
-                          'namazid': controller.zekrList[index].namazId,
-                          'zekrid': controller.zekrList[index].taghebatId,
-                          'zekrname': controller.zekrList[index].taghebatTitle,
+                          'namazid': controllerDetail.zekrList[index].namazId,
+                          'zekrid': controllerDetail.zekrList[index].taghebatId,
+                          'zekrname':
+                              controllerDetail.zekrList[index].taghebatTitle,
+                          'index': 0
                         });
                       },
                       child: Padding(
@@ -119,10 +123,11 @@ class PrayerDetailPage extends StatelessWidget {
                                 bottom: appsize.size.height / 45),
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(
+                                  deviceBasedRadius(context)),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.teal.withOpacity(0.1),
+                                  color: Colors.teal.withAlpha(26),
                                   blurRadius: 8,
                                   offset: Offset(0, 4),
                                 )
@@ -132,16 +137,23 @@ class PrayerDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Expanded(
-                                  child: Center(
-                                    child: Text(
-                                      zekr.taghebatTitle!,
-                                      style: GoogleFonts.cairo(
-                                        color: Colors.black,
-                                        fontSize: appsize.size.width / 27,
-                                        fontWeight: FontWeight.w800,
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        appsize.size.width / 65,
+                                        appsize.size.height / 150,
+                                        appsize.size.width / 65,
+                                        appsize.size.height / 150),
+                                    child: Center(
+                                      child: Text(
+                                        zekr.taghebatTitle!,
+                                        style: GoogleFonts.cairo(
+                                          color: Colors.black,
+                                          fontSize: appsize.size.width / 27,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                        textDirection: TextDirection.rtl,
+                                        textAlign: TextAlign.justify,
                                       ),
-                                      textDirection: TextDirection.rtl,
-                                      textAlign: TextAlign.justify,
                                     ),
                                   ),
                                 ),

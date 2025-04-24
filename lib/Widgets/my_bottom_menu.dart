@@ -25,7 +25,7 @@ class MyBottomNavigatorBar extends StatelessWidget {
               child: IconButton(
                 icon: Icon(Icons.settings, color: Colors.white),
                 onPressed: () {
-                  Get.toNamed(AppRoutes.detail);
+                  Get.offAndToNamed(AppRoutes.detail);
                 },
               ),
             ),
@@ -36,7 +36,7 @@ class MyBottomNavigatorBar extends StatelessWidget {
                     icon: Icon(CupertinoIcons.circle_grid_3x3,
                         color: Colors.white),
                     onPressed: () {
-                      Get.offAndToNamed(AppRoutes.home);
+                      Get.offAllNamed(AppRoutes.home);
                     },
                   ),
                   Text("خانه")

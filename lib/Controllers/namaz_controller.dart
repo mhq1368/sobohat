@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sobohat/Models/namaz_model.dart';
@@ -7,6 +9,7 @@ import 'package:sobohat/const/url_const.dart';
 class NamazController extends GetxController {
   RxBool isloading = false.obs;
   RxList<NamazModel> namazList = <NamazModel>[].obs;
+  late StreamSubscription connectivitySubscription;
   @override
   void onInit() {
     super.onInit();
@@ -14,7 +17,7 @@ class NamazController extends GetxController {
   }
 
   getNamazList() async {
-    isloading.value = true;
+    isloading.value = true; // 👈 این تضمین می‌کنه که لودینگ فعال بشه
     namazList.clear();
     try {
       // Simulate a network call
