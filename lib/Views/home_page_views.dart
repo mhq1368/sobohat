@@ -20,12 +20,21 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final deviceSizeBanner = deviceBasedSizeBanner(context);
+    final deviceSizeIcons = deviceBasedSizeIcons(context);
+    final deviceSpaceFromtop = deviceSpaceFromTop(context);
+    final deviceSpaceFromright = deviceSpaceFromRight(context);
+    final deviceSpaceFromleft = deviceSpaceFromLeft(context);
+    final deviceSize = deviceBasedWidgetSizeFixed(context);
+    final toolbarHeight = toolBarHeight(context);
+    final deviceSpaceG = deviceSpaceGrid(context);
     var appsize = MediaQuery.of(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        titleSpacing: -appsize.size.width / 50,
+        // titleSpacing: -appsize.size.width / 50,
         title: MyAppBar(appsize: appsize),
+        toolbarHeight: toolbarHeight,
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -39,135 +48,146 @@ class HomePage extends StatelessWidget {
             Center(
               child: Image.asset(
                 Assets.banner.path,
-                height: appsize.size.height / 3.5,
-                width: appsize.size.width,
+                height: deviceSizeBanner.height,
+                width: deviceSizeBanner.width,
                 fit: BoxFit.fill,
               ),
             ),
             Expanded(
-              child: Obx(() {
-                if (namazController.namazList.isNotEmpty) {
-                  return GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: appsize.size.width / 190,
-                        mainAxisSpacing: appsize.size.height / 75,
-                        childAspectRatio: 1.5,
-                        mainAxisExtent: appsize.size.height / 7),
-                    itemCount: namazController.namazList.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () => Get.toNamed(AppRoutes.detail, arguments: {
-                          'name': namazController.namazList[index].namazName,
-                          'id': namazController.namazList[index].namazId,
-                        }),
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              top: appsize.size.height / 65,
-                              bottom: appsize.size.height / 65,
-                              right: appsize.size.width / 25,
-                              left: appsize.size.width / 25),
-                          padding: EdgeInsets.only(
-                            top: appsize.size.width / 30,
-                            bottom: appsize.size.width / 30,
-                            right: appsize.size.width / 30,
-                            left: appsize.size.width / 30,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withAlpha(178),
-                            borderRadius: BorderRadius.circular(
-                                deviceBasedRadius(context)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.teal.withAlpha(26),
-                                blurRadius: 15,
-                                offset: Offset(0, 4),
-                              )
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                Assets.hand.path,
-                                height: appsize.size.height / 25,
-                                width: appsize.size.width / 15,
+              child: Padding(
+                padding: EdgeInsets.only(
+                    top: deviceSpaceFromtop.top,
+                    right: deviceSpaceFromright.right,
+                    left: deviceSpaceFromleft.left),
+                child: Obx(() {
+                  if (namazController.namazList.isNotEmpty) {
+                    return GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: deviceSpaceG.width,
+                          mainAxisSpacing: deviceSpaceG.height,
+                          childAspectRatio: 1.1,
+                          mainAxisExtent: deviceSize.height),
+                      itemCount: namazController.namazList.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () =>
+                              Get.toNamed(AppRoutes.detail, arguments: {
+                            'name': namazController.namazList[index].namazName,
+                            'id': namazController.namazList[index].namazId,
+                          }),
+                          child: Center(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  top: deviceSpaceFromtop.top,
+                                  right: deviceSpaceFromright.right,
+                                  left: deviceSpaceFromleft.left),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withAlpha(178),
+                                borderRadius: BorderRadius.circular(
+                                    deviceBasedRadius(context)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.teal.withAlpha(26),
+                                    blurRadius: 15,
+                                    offset: Offset(0, 4),
+                                  )
+                                ],
                               ),
-                              Expanded(
-                                  child:
-                                      SizedBox(width: appsize.size.width / 25)),
-                              Text(namazController.namazList[index].namazName!,
-                                  style: GoogleFonts.vazirmatn(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: appsize.size.width / 25)),
-                            ],
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Image.asset(
+                                        Assets.hand.path,
+                                        height: deviceSizeIcons.height,
+                                        width: deviceSizeIcons.width,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                          namazController
+                                              .namazList[index].namazName!,
+                                          style: GoogleFonts.vazirmatn(
+                                              fontWeight: FontWeight.w700,
+                                              fontStyle: FontStyle.normal,
+                                              fontSize: deviceBasedFontSize(
+                                                  context))),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                } else if (namazController.isloading.value) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        mainLoading(appsize.size.height),
-                        SizedBox(
-                          height: appsize.size.height / 17,
-                        ),
-                        Text("لطفاً شکیبا باشید...",
-                            style: GoogleFonts.elMessiri(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w900,
-                                fontSize: appsize.size.width / 25))
-                      ],
-                    ),
-                  );
-                } else {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.wifi_off,
-                            size: appsize.size.width / 7,
-                            color: Colors.redAccent),
-                        SizedBox(height: appsize.size.height / 55),
-                        Text("اطلاعات از سرور دریافت نگردید...",
-                            style: GoogleFonts.elMessiri(
-                                color: Colors.redAccent,
-                                fontWeight: FontWeight.bold,
-                                fontSize: appsize.size.width / 28)),
-                        SizedBox(height: appsize.size.height / 15),
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            namazController.getNamazList();
-                          },
-                          icon: Icon(Icons.refresh,
-                              color: Colors.white70,
-                              size: appsize.size.width / 20),
-                          label: Text("تلاش مجدد",
-                              style: GoogleFonts.vazirmatn(
+                        );
+                      },
+                    );
+                  } else if (namazController.isloading.value) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          mainLoading(appsize.size.height),
+                          SizedBox(
+                            height: appsize.size.height / 17,
+                          ),
+                          Text("لطفاً شکیبا باشید...",
+                              style: GoogleFonts.elMessiri(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: appsize.size.width / 25))
+                        ],
+                      ),
+                    );
+                  } else {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.wifi_off,
+                              size: appsize.size.width / 7,
+                              color: Colors.redAccent),
+                          SizedBox(height: appsize.size.height / 55),
+                          Text("اطلاعات از سرور دریافت نگردید...",
+                              style: GoogleFonts.elMessiri(
+                                  color: Colors.redAccent,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: appsize.size.width / 28)),
+                          SizedBox(height: appsize.size.height / 15),
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              namazController.getNamazList();
+                            },
+                            icon: Icon(Icons.refresh,
                                 color: Colors.white70,
-                                fontWeight: FontWeight.bold,
-                                fontSize: appsize.size.width / 25,
-                              )),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.teal,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: appsize.size.width / 10,
-                              vertical: appsize.size.height / 80,
+                                size: appsize.size.width / 20),
+                            label: Text("تلاش مجدد",
+                                style: GoogleFonts.vazirmatn(
+                                  color: Colors.white70,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: appsize.size.width / 25,
+                                )),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.teal,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: appsize.size.width / 10,
+                                vertical: appsize.size.height / 80,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    deviceBasedRadius(context)),
+                              ),
                             ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  deviceBasedRadius(context)),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-                }
-              }),
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                }),
+              ),
             ),
           ],
         ),

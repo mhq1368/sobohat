@@ -13,6 +13,7 @@ class Assets {
   const Assets._();
 
   static const AssetGenImage bg = AssetGenImage('assets/BG.png');
+  static const AssetGenImage bGMatnDoa = AssetGenImage('assets/BGMatnDoa.png');
   static const AssetGenImage banner = AssetGenImage('assets/Banner.png');
   static const AssetGenImage hand = AssetGenImage('assets/Hand.png');
   static const AssetGenImage logo = AssetGenImage('assets/Logo.png');
@@ -25,10 +26,12 @@ class Assets {
   static const AssetGenImage logoWithBGBig = AssetGenImage(
     'assets/Logo_WithBG_Big.png',
   );
+  static const AssetGenImage tazhib = AssetGenImage('assets/tazhib.png');
 
   /// List of all assets
   static List<AssetGenImage> get values => [
     bg,
+    bGMatnDoa,
     banner,
     hand,
     logo,
@@ -37,6 +40,7 @@ class Assets {
     logo3,
     logoWithBG,
     logoWithBGBig,
+    tazhib,
   ];
 }
 

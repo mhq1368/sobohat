@@ -37,6 +37,7 @@ class PrayerApp extends StatelessWidget {
       //   Get.put(PrayerController());
       // }),
       // initialRoute: '/',
+      // home: TestPAge(),
       getPages: [
         GetPage(name: AppRoutes.home, page: () => HomePage()),
         GetPage(name: AppRoutes.detail, page: () => PrayerDetailPage()),

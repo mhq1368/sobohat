@@ -23,15 +23,20 @@ class PrayerDetailPage extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    final deviceSpaceFromtop = deviceSpaceFromTop(context);
+    final deviceSpaceFromright = deviceSpaceFromRight(context);
+    final deviceSpaceFromleft = deviceSpaceFromLeft(context);
+    final deviceSpaceFrombottom = deviceSpaceFromBottom(context);
+    final toolbarHeight = toolBarHeight(context);
     var appsize = MediaQuery.of(context);
     controllerDetail.getZekrList(nid);
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        titleSpacing: -appsize.size.width / 50,
         title: MyAppBar(appsize: appsize),
         automaticallyImplyLeading: false,
+        toolbarHeight: toolbarHeight,
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -41,133 +46,118 @@ class PrayerDetailPage extends StatelessWidget {
             alignment: Alignment.center,
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-                padding: EdgeInsets.fromLTRB(
-                    appsize.size.width / 25,
-                    appsize.size.height / 25,
-                    appsize.size.width / 15,
-                    appsize.size.height / 100),
-                child: Container(
-                  padding: EdgeInsets.only(
-                    left: appsize.size.width / 10,
-                    right: appsize.size.width / 10,
-                    top: appsize.size.height / 55,
-                    bottom: appsize.size.height / 55,
+        child: Padding(
+          padding: EdgeInsets.only(
+              top: deviceSpaceFromtop.top + 25,
+              left: deviceSpaceFromleft.left,
+              right: deviceSpaceFromright.right,
+              bottom: deviceSpaceFrombottom.bottom + 100),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: EdgeInsets.only(
+                    top: deviceSpaceFromtop.top,
+                    left: deviceSpaceFromleft.left,
+                    right: deviceSpaceFromright.right,
+                    bottom: deviceSpaceFrombottom.bottom),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 4, 75, 61)
+                      .withAlpha(31), // پس‌زمینه کم‌رنگ
+                  borderRadius: BorderRadius.circular(
+                      deviceBasedRadius(context)), // گوشه‌های گرد‌تر
+                  border: Border.all(
+                    color:
+                        const Color.fromARGB(255, 255, 255, 255), // رنگ حاشیه
+                    width: 0.85, // ضخامت حاشیه بیشتر
                   ),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 4, 75, 61)
-                        .withAlpha(31), // پس‌زمینه کم‌رنگ
-                    borderRadius: BorderRadius.circular(
-                        deviceBasedRadius(context)), // گوشه‌های گرد‌تر
-                    border: Border.all(
-                      color:
-                          const Color.fromARGB(255, 255, 255, 255), // رنگ حاشیه
-                      width: 0.85, // ضخامت حاشیه بیشتر
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withAlpha(51), // سایه بیشتر
+                      offset: Offset(0, 8), // موقعیت سایه
+                      blurRadius: 15, // شعاع بلور بیشتر
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withAlpha(51), // سایه بیشتر
-                        offset: Offset(0, 8), // موقعیت سایه
-                        blurRadius: 15, // شعاع بلور بیشتر
-                      ),
-                    ],
+                  ],
+                ),
+                child: Text(
+                  'تعقیبات $nname',
+                  style: GoogleFonts.lalezar(
+                    fontSize: deviceBasedTitrFontSize(context),
+                    color: const Color.fromARGB(
+                        255, 255, 255, 255), // رنگ متن آبی برای تضاد بیشتر
+                    fontWeight: FontWeight.bold, // فونت بولد
                   ),
-                  child: Text(
-                    'تعقیبات $nname',
-                    style: GoogleFonts.lalezar(
-                      fontSize: appsize.size.height / 35,
-                      color: const Color.fromARGB(
-                          255, 255, 255, 255), // رنگ متن آبی برای تضاد بیشتر
-                      fontWeight: FontWeight.bold, // فونت بولد
-                    ),
-                  ),
-                )),
-            Expanded(
-              child: Obx(() {
-                if (controllerDetail.loading.value) {
-                  return Center(child: mainLoading(appsize.size.height));
-                }
-                return ListView.builder(
-                  itemCount: controllerDetail.zekrList.length,
-                  physics: BouncingScrollPhysics(),
+                ),
+              ),
+              Expanded(
+                child: Padding(
                   padding: EdgeInsets.only(
-                      left: appsize.size.width / 10,
-                      right: appsize.size.width / 10,
-                      top: appsize.size.height / 55,
-                      bottom: appsize.size.height / 55),
-                  itemBuilder: (context, index) {
-                    final zekr = controllerDetail.zekrList[index];
-                    return GestureDetector(
-                      onTap: () {
-                        Get.toNamed(AppRoutes.matn, arguments: {
-                          'namazid': controllerDetail.zekrList[index].namazId,
-                          'zekrid': controllerDetail.zekrList[index].taghebatId,
-                          'zekrname':
-                              controllerDetail.zekrList[index].taghebatTitle,
-                          'index': 0
-                        });
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: appsize.size.width / 55,
-                            right: appsize.size.width / 55,
-                            top: appsize.size.height / 55,
-                            bottom: appsize.size.height / 55),
-                        child: Center(
-                          child: Container(
+                      left: deviceSpaceFromleft.left + 30,
+                      right: deviceSpaceFromright.right + 30),
+                  child: Obx(() {
+                    if (controllerDetail.loading.value) {
+                      return Center(child: mainLoading(appsize.size.height));
+                    }
+                    return ListView.builder(
+                      itemCount: controllerDetail.zekrList.length,
+                      physics: BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        final zekr = controllerDetail.zekrList[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Get.toNamed(AppRoutes.matn, arguments: {
+                              'namazid':
+                                  controllerDetail.zekrList[index].namazId,
+                              'zekrid':
+                                  controllerDetail.zekrList[index].taghebatId,
+                              'zekrname': controllerDetail
+                                  .zekrList[index].taghebatTitle,
+                              'index': 0
+                            });
+                          },
+                          child: Padding(
                             padding: EdgeInsets.only(
-                                top: appsize.size.height / 45,
-                                bottom: appsize.size.height / 45),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(
-                                  deviceBasedRadius(context)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.teal.withAlpha(26),
-                                  blurRadius: 8,
-                                  offset: Offset(0, 4),
-                                )
-                              ],
+                              top: deviceSpaceFromtop.top,
                             ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        appsize.size.width / 65,
-                                        appsize.size.height / 150,
-                                        appsize.size.width / 65,
-                                        appsize.size.height / 150),
-                                    child: Center(
-                                      child: Text(
-                                        zekr.taghebatTitle!,
-                                        style: GoogleFonts.cairo(
-                                          color: Colors.black,
-                                          fontSize: appsize.size.width / 27,
-                                          fontWeight: FontWeight.w800,
-                                        ),
-                                        textDirection: TextDirection.rtl,
-                                        textAlign: TextAlign.justify,
-                                      ),
-                                    ),
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                top: deviceSpaceFromtop.top,
+                                bottom: deviceSpaceFrombottom.bottom,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 255, 255, 255),
+                                borderRadius: BorderRadius.circular(
+                                    deviceBasedRadius(context)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.teal.withAlpha(26),
+                                    blurRadius: 8,
+                                    offset: Offset(0, 4),
+                                  )
+                                ],
+                              ),
+                              child: Center(
+                                child: Text(
+                                  zekr.taghebatTitle!,
+                                  style: GoogleFonts.cairo(
+                                    color: Colors.black,
+                                    fontSize: deviceBasedFontSize(context),
+                                    fontWeight: FontWeight.w800,
                                   ),
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.justify,
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     );
-                  },
-                );
-              }),
-            ),
-          ],
+                  }),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: MyBottomNavigatorBar(appsize: appsize),
