@@ -37,6 +37,7 @@ class PrayerDetailPage extends StatelessWidget {
         title: MyAppBar(appsize: appsize),
         automaticallyImplyLeading: false,
         toolbarHeight: toolbarHeight,
+        titleSpacing: -appsize.size.width / 3,
       ),
       body: Container(
         decoration: BoxDecoration(

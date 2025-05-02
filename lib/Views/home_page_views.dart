@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        // titleSpacing: -appsize.size.width / 50,
+        titleSpacing: -appsize.size.width / 3,
         title: MyAppBar(appsize: appsize),
         toolbarHeight: toolbarHeight,
       ),

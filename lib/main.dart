@@ -1,7 +1,8 @@
 // main.dart
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:sobohat/Controllers/theme_controller.dart';
 import 'package:sobohat/Views/about_page_views.dart';
 import 'package:sobohat/Views/home_page_views.dart';
 import 'package:sobohat/Views/matn_doaa_views.dart';
@@ -11,6 +12,19 @@ void main() {
   runApp(
     PrayerApp(),
   );
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.teal.withAlpha(100),
+    systemNavigationBarIconBrightness: Brightness.light,
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.light,
+    systemNavigationBarDividerColor: const Color(0xff1A2B47),
+    systemNavigationBarContrastEnforced: true,
+    statusBarBrightness: Brightness.dark,
+    systemStatusBarContrastEnforced: true,
+  ));
+  Get.put(ThemeController());
 }
 
 class PrayerApp extends StatelessWidget {
@@ -23,21 +37,7 @@ class PrayerApp extends StatelessWidget {
       locale: Locale('fa'),
       debugShowCheckedModeBanner: false,
       title: 'سُبُحات',
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-        textTheme: GoogleFonts.vazirmatnTextTheme(),
-        scaffoldBackgroundColor: Color(0xFFF7F6F3),
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.teal.shade700,
-          foregroundColor: Colors.white,
-          elevation: 0,
-        ),
-      ),
-      // initialBinding: BindingsBuilder(() {
-      //   Get.put(PrayerController());
-      // }),
-      // initialRoute: '/',
-      // home: TestPAge(),
+      theme: ThemeData(),
       getPages: [
         GetPage(name: AppRoutes.home, page: () => HomePage()),
         GetPage(name: AppRoutes.detail, page: () => PrayerDetailPage()),

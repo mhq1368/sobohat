@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sobohat/const/device_function.dart';
 import 'package:sobohat/main.dart';
 
 class MyBottomNavigatorBar extends StatelessWidget {
@@ -19,40 +20,66 @@ class MyBottomNavigatorBar extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.teal.shade600,
         ),
-        child: Row(
-          children: [
-            Expanded(
-              child: IconButton(
-                icon: Icon(Icons.settings, color: Colors.white),
-                onPressed: () {
-                  Get.offAndToNamed(AppRoutes.detail);
-                },
-              ),
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  IconButton(
-                    icon: Icon(CupertinoIcons.circle_grid_3x3,
-                        color: Colors.white),
-                    onPressed: () {
-                      Get.offAllNamed(AppRoutes.home);
-                    },
+        child: Padding(
+          padding: EdgeInsets.only(top: appsize.size.height / 150),
+          child: Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    Get.offAllNamed(AppRoutes.home);
+                  },
+                  child: Column(
+                    children: [
+                      Icon(Icons.system_update_alt_outlined,
+                          color: Colors.white),
+                      SizedBox(
+                        height: deviceSpaceFromTop(context).top / 2,
+                      ),
+                      Text("بروزرسانی",
+                          style: Theme.of(context).textTheme.titleSmall)
+                    ],
                   ),
-                  Text("خانه")
-                ],
+                ),
               ),
-            ),
-            Expanded(
-              child: IconButton(
-                icon:
-                    Icon(CupertinoIcons.info_circle_fill, color: Colors.white),
-                onPressed: () {
-                  Get.toNamed(AppRoutes.about);
-                },
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    Get.offAllNamed(AppRoutes.home);
+                  },
+                  child: Column(
+                    children: [
+                      Icon(CupertinoIcons.circle_grid_3x3, color: Colors.white),
+                      SizedBox(
+                        height: deviceSpaceFromTop(context).top / 2,
+                      ),
+                      Text("خانه",
+                          style: Theme.of(context).textTheme.titleSmall)
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ],
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.about);
+                  },
+                  child: Column(
+                    children: [
+                      Icon(CupertinoIcons.info, color: Colors.white),
+                      SizedBox(
+                        height: deviceSpaceFromTop(context).top / 2,
+                      ),
+                      Text(
+                        "توضیحات",
+                        style: Theme.of(context).textTheme.titleSmall,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -36,6 +36,7 @@ class MatnDoaaViews extends StatelessWidget {
     final toolbarheight = toolBarHeight(context);
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: -appsize.size.width / 3,
         automaticallyImplyLeading: false,
         title: MyAppBar(appsize: appsize),
         toolbarHeight: toolbarheight,
@@ -53,8 +54,8 @@ class MatnDoaaViews extends StatelessWidget {
             child: Image.asset(
               Assets.bGMatnDoa.path,
               height: appsize.size.height,
-              width: double.infinity,
-              fit: BoxFit.cover,
+              width: appsize.size.width,
+              fit: BoxFit.fill,
               color: Colors.white54,
             ),
           ),
@@ -172,8 +173,9 @@ class MatnDoaaViews extends StatelessWidget {
                                             GoogleFonts.elMessiri().fontFamily,
                                       ),
                                       "p": Style(
-                                        textAlign: TextAlign.justify,
-                                      ),
+                                          textAlign: TextAlign.justify,
+                                          lineHeight: LineHeight(
+                                              appsize.size.height / 350)),
                                       "strong": Style(
                                         fontFamily:
                                             GoogleFonts.vazirmatn().fontFamily,

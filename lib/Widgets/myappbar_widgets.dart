@@ -15,37 +15,40 @@ class MyAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final iconsize = deviceBasedSizeIcons(context);
     final widthDevice = MediaQuery.of(context).size.width;
-    return Row(
-      // mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        widthDevice <= 391
-            ? Container(
-                child: Assets.logo2.image(
-                    width: iconsize.width + 45, height: iconsize.height + 45),
-              )
-            : (widthDevice > 391 && widthDevice <= 450)
-                ? Container(
-                    child: Assets.logo2.image(
-                        width: iconsize.width + 45,
-                        height: iconsize.height + 45),
-                  )
-                : (widthDevice > 450 && widthDevice <= 800)
-                    ? Container(
-                        child: Assets.logo2.image(
-                            width: iconsize.width + 45,
-                            height: iconsize.height + 45),
-                      )
-                    : Container(
-                        child: Assets.logo2.image(
-                            width: iconsize.width - 65,
-                            height: iconsize.height - 65),
-                      ),
-        Expanded(child: SizedBox()),
-        Text('سُبُحات',
-            style: GoogleFonts.elMessiri(
-                fontWeight: FontWeight.w900,
-                fontSize: deviceBasedTitrFontSize(context))),
-      ],
+    return Padding(
+      padding: EdgeInsets.only(
+          left: appsize.size.width / 15, right: appsize.size.width / 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          widthDevice <= 391
+              ? Container(
+                  child: Assets.logo2.image(
+                      width: iconsize.width + 45, height: iconsize.height + 45),
+                )
+              : (widthDevice > 391 && widthDevice <= 450)
+                  ? Container(
+                      child: Assets.logo2.image(
+                          width: iconsize.width + 45,
+                          height: iconsize.height + 45),
+                    )
+                  : (widthDevice > 450 && widthDevice <= 800)
+                      ? Container(
+                          child: Assets.logo2.image(
+                              width: iconsize.width + 45,
+                              height: iconsize.height + 45),
+                        )
+                      : Container(
+                          child: Assets.logo2.image(
+                              width: iconsize.width - 65,
+                              height: iconsize.height - 65),
+                        ),
+          Text('سُبُحات',
+              style: GoogleFonts.elMessiri(
+                  fontWeight: FontWeight.w900,
+                  fontSize: deviceBasedTitrFontSize(context))),
+        ],
+      ),
     );
   }
 }
