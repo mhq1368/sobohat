@@ -6,6 +6,7 @@ import 'package:sobohat/Widgets/my_bottom_menu.dart';
 import 'package:sobohat/Widgets/myappbar_widgets.dart';
 import 'package:sobohat/Widgets/myloading.dart';
 import 'package:sobohat/const/device_function.dart';
+import 'package:sobohat/const/helper_size.dart';
 import 'package:sobohat/gen/assets.gen.dart';
 import 'package:sobohat/main.dart';
 
@@ -30,7 +31,7 @@ class PrayerDetailPage extends StatelessWidget {
     final toolbarHeight = toolBarHeight(context);
     var appsize = MediaQuery.of(context);
     controllerDetail.getZekrList(nid);
-
+    final responsive = ResponsiveHelper(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -128,7 +129,7 @@ class PrayerDetailPage extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: const Color.fromARGB(255, 255, 255, 255),
                                 borderRadius: BorderRadius.circular(
-                                    deviceBasedRadius(context)),
+                                    responsive.scaledRadius(10)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.teal.withAlpha(26),
@@ -142,7 +143,7 @@ class PrayerDetailPage extends StatelessWidget {
                                   zekr.taghebatTitle!,
                                   style: GoogleFonts.cairo(
                                     color: Colors.black,
-                                    fontSize: deviceBasedFontSize(context),
+                                    fontSize: responsive.scaledFontSize(12),
                                     fontWeight: FontWeight.w800,
                                   ),
                                   textDirection: TextDirection.rtl,

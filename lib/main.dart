@@ -7,6 +7,7 @@ import 'package:sobohat/Views/about_page_views.dart';
 import 'package:sobohat/Views/home_page_views.dart';
 import 'package:sobohat/Views/matn_doaa_views.dart';
 import 'package:sobohat/Views/prayer_detail_page_views.dart';
+import 'package:sobohat/Views/splash_screen.dart';
 
 void main() {
   runApp(
@@ -39,6 +40,7 @@ class PrayerApp extends StatelessWidget {
       title: 'سُبُحات',
       theme: ThemeData(),
       getPages: [
+        GetPage(name: AppRoutes.splash, page: () => SplashScreen()),
         GetPage(name: AppRoutes.home, page: () => HomePage()),
         GetPage(name: AppRoutes.detail, page: () => PrayerDetailPage()),
         GetPage(name: AppRoutes.about, page: () => AboutPage()),
@@ -50,7 +52,8 @@ class PrayerApp extends StatelessWidget {
 
 class AppRoutes {
   AppRoutes._();
-  static const String home = '/';
+  static const String home = '/home';
+  static const String splash = '/';
   static const String detail = '/detail';
   static const String matn = '/matn';
   static const String about = '/about';

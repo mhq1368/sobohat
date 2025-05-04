@@ -8,6 +8,7 @@ import 'package:sobohat/Widgets/my_bottom_menu.dart';
 import 'package:sobohat/Widgets/myappbar_widgets.dart';
 import 'package:sobohat/Widgets/myloading.dart';
 import 'package:sobohat/const/device_function.dart';
+import 'package:sobohat/const/helper_size.dart';
 import 'package:sobohat/gen/assets.gen.dart';
 import 'package:sobohat/main.dart';
 
@@ -20,21 +21,15 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final deviceSizeBanner = deviceBasedSizeBanner(context);
     final deviceSizeIcons = deviceBasedSizeIcons(context);
-    final deviceSpaceFromtop = deviceSpaceFromTop(context);
-    final deviceSpaceFromright = deviceSpaceFromRight(context);
-    final deviceSpaceFromleft = deviceSpaceFromLeft(context);
-    final deviceSize = deviceBasedWidgetSizeFixed(context);
-    final toolbarHeight = toolBarHeight(context);
-    final deviceSpaceG = deviceSpaceGrid(context);
     var appsize = MediaQuery.of(context);
+    final responsive = ResponsiveHelper(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         titleSpacing: -appsize.size.width / 3,
         title: MyAppBar(appsize: appsize),
-        toolbarHeight: toolbarHeight,
+        toolbarHeight: responsive.screenHeight / 13,
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -48,26 +43,23 @@ class HomePage extends StatelessWidget {
             Center(
               child: Image.asset(
                 Assets.banner.path,
-                height: deviceSizeBanner.height,
-                width: deviceSizeBanner.width,
+                height: responsive.screenHeight / 4,
+                width: double.infinity,
                 fit: BoxFit.fill,
               ),
             ),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.only(
-                    top: deviceSpaceFromtop.top,
-                    right: deviceSpaceFromright.right,
-                    left: deviceSpaceFromleft.left),
+                padding: responsive.scaledPaddingLTRB(15, 10, 15, 0),
                 child: Obx(() {
                   if (namazController.namazList.isNotEmpty) {
                     return GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
-                          crossAxisSpacing: deviceSpaceG.width,
-                          mainAxisSpacing: deviceSpaceG.height,
+                          crossAxisSpacing: responsive.scaleWidth + 25,
+                          mainAxisSpacing: responsive.scaleHeight + 25,
                           childAspectRatio: 1.1,
-                          mainAxisExtent: deviceSize.height),
+                          mainAxisExtent: responsive.scale * 110),
                       itemCount: namazController.namazList.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
@@ -78,14 +70,11 @@ class HomePage extends StatelessWidget {
                           }),
                           child: Center(
                             child: Container(
-                              padding: EdgeInsets.only(
-                                  top: deviceSpaceFromtop.top,
-                                  right: deviceSpaceFromright.right,
-                                  left: deviceSpaceFromleft.left),
+                              padding: responsive.scaledPadding(2),
                               decoration: BoxDecoration(
                                 color: Colors.white.withAlpha(178),
                                 borderRadius: BorderRadius.circular(
-                                    deviceBasedRadius(context)),
+                                    responsive.scaledRadius(5)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.teal.withAlpha(26),
@@ -113,8 +102,8 @@ class HomePage extends StatelessWidget {
                                           style: GoogleFonts.vazirmatn(
                                               fontWeight: FontWeight.w700,
                                               fontStyle: FontStyle.normal,
-                                              fontSize: deviceBasedFontSize(
-                                                  context))),
+                                              fontSize: responsive
+                                                  .scaledFontSize(12))),
                                     ),
                                   ],
                                 ),
@@ -138,7 +127,7 @@ class HomePage extends StatelessWidget {
                               style: GoogleFonts.elMessiri(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w900,
-                                  fontSize: appsize.size.width / 25))
+                                  fontSize: responsive.scaledFontSize(11)))
                         ],
                       ),
                     );
@@ -155,7 +144,7 @@ class HomePage extends StatelessWidget {
                               style: GoogleFonts.elMessiri(
                                   color: Colors.redAccent,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: appsize.size.width / 28)),
+                                  fontSize: responsive.scaledFontSize(11))),
                           SizedBox(height: appsize.size.height / 15),
                           ElevatedButton.icon(
                             onPressed: () {

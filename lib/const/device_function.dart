@@ -12,8 +12,8 @@ double deviceBasedRadius(BuildContext context) {
 // سایز فونت ها برای دیوایس های متفاوت
 double deviceBasedFontSize(BuildContext context) {
   final width = MediaQuery.of(context).size.width;
-  if (width <= 391) return 10; // Small devices
-  if (width > 391 && width <= 450) return 12; // Medium devices
+  if (width <= 391) return 12; // Small devices
+  if (width > 391 && width <= 450) return 14; // Medium devices
   if (width > 450 && width <= 800) return 16; // Medium devices
   if (width > 800 && width <= 1000) return 18; // Medium devices
 
