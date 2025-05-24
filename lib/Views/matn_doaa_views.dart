@@ -10,23 +10,40 @@ import 'package:sobohat/Widgets/myloading.dart';
 import 'package:sobohat/const/device_function.dart';
 import 'package:sobohat/gen/assets.gen.dart';
 
-late int namazid, zekrid, index;
-late String zekrname;
+// late int namazid, zekrid, index;
+// late String zekrname;
+// late MatnDoaController controller;
 
-class MatnDoaaViews extends StatelessWidget {
-  final args = Get.arguments as Map<String, dynamic>;
-  final MatnDoaController controller = Get.put(MatnDoaController());
+class MatnDoaaViews extends StatefulWidget {
+  final int namazid, zekrid, index;
+  final String zekrname;
 
-  late final int namazid, zekrid, index;
-  late final String zekrname;
+  // final args = Get.arguments as Map<String, dynamic>;
 
-  MatnDoaaViews({super.key}) {
-    namazid = args['namazid'];
-    zekrid = args['zekrid'];
-    zekrname = args['zekrname'];
-    index = args['index'];
+  MatnDoaaViews({super.key})
+      : index = Get.arguments['index'],
+        namazid = Get.arguments['namazid'],
+        zekrid = Get.arguments['zekrid'],
+        zekrname = Get.arguments['zekrname'];
+  @override
+  State<MatnDoaaViews> createState() => _MatnDoaaViewsState();
+}
 
-    controller.getmatndoa(zekrid); // داده‌ها رو لود کن
+class _MatnDoaaViewsState extends State<MatnDoaaViews> {
+  late MatnDoaController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.put(MatnDoaController());
+    controller.getmatndoa(widget.zekrid); // از widget.zekrid استفاده کن
+  }
+
+  Future<void> _referesh() async {
+    await Future.delayed(Duration(seconds: 2));
+    setState(() {
+      controller.getmatndoa(widget.zekrid); // از widget.zekrid استفاده کن
+    });
   }
 
   @override
@@ -74,18 +91,18 @@ class MatnDoaaViews extends StatelessWidget {
                       right: appsize.size.height / 35,
                     ),
                     child: deviceWidth <= 391
-                        ? Text(zekrname,
+                        ? Text(widget.zekrname,
                             style: GoogleFonts.vazirmatn(
                               fontSize: deviceBasedFontSize(context) + 5,
                               color: Colors.white,
                             ))
                         : (deviceWidth > 391 && deviceWidth <= 450)
-                            ? Text(zekrname,
+                            ? Text(widget.zekrname,
                                 style: GoogleFonts.vazirmatn(
                                   fontSize: deviceBasedFontSize(context) + 5,
                                   color: Colors.white,
                                 ))
-                            : Text(zekrname,
+                            : Text(widget.zekrname,
                                 style: GoogleFonts.vazirmatn(
                                   fontSize: deviceBasedFontSize(context) + 5,
                                   color: Colors.white,
@@ -116,7 +133,7 @@ class MatnDoaaViews extends StatelessWidget {
                           ),
                 Expanded(
                   child: FutureBuilder<MatnDoaModel>(
-                    future: controller.getmatndoa(zekrid),
+                    future: controller.getmatndoa(widget.zekrid),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(
@@ -136,16 +153,6 @@ class MatnDoaaViews extends StatelessWidget {
                               return Text(
                                   'خطا در دانلود: ${htmlSnapshot.error}');
                             } else {
-                              // فقط بخش <body> رو جدا می‌کنیم
-                              // String rawHtml = htmlSnapshot.data!;
-                              // String bodyContent = rawHtml.contains("<body>")
-                              //     ? rawHtml
-                              //         .split("<body>")
-                              //         .last
-                              //         .split("</body>")
-                              //         .first
-                              //     : rawHtml;
-
                               return Padding(
                                 padding: EdgeInsets.only(
                                   top: appsize.size.height / 100,
@@ -153,51 +160,55 @@ class MatnDoaaViews extends StatelessWidget {
                                   left: appsize.size.width / 25,
                                   right: appsize.size.width / 25,
                                 ),
-                                child: SingleChildScrollView(
-                                  child: Html(
-                                    data: htmlSnapshot.data!,
-                                    style: {
-                                      "*": Style(
-                                        color: Colors.white,
-                                        fontSize:
-                                            FontSize(appsize.size.width / 20),
-                                        fontFamily:
-                                            GoogleFonts.vazirmatn().fontFamily,
-                                      ),
-                                      "h2": Style(
-                                        fontSize:
-                                            FontSize(appsize.size.width / 15),
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.amber,
-                                        fontFamily:
-                                            GoogleFonts.elMessiri().fontFamily,
-                                      ),
-                                      "p": Style(
-                                          textAlign: TextAlign.justify,
-                                          lineHeight: LineHeight(
-                                              appsize.size.height / 350)),
-                                      "strong": Style(
-                                        fontFamily:
-                                            GoogleFonts.vazirmatn().fontFamily,
-                                        lineHeight: LineHeight(
-                                            appsize.size.height / 350),
-                                        color: Colors.white70,
-                                      ),
-                                      "blockquote": Style(
-                                        backgroundColor: Colors.black26,
-                                        padding: HtmlPaddings.all(10),
-                                        border: Border.symmetric(
-                                          vertical: BorderSide(
-                                              color: Colors.amber, width: 3),
+                                child: RefreshIndicator(
+                                  onRefresh: _referesh,
+                                  child: SingleChildScrollView(
+                                    physics: AlwaysScrollableScrollPhysics(),
+                                    child: Html(
+                                      data: htmlSnapshot.data!,
+                                      style: {
+                                        "*": Style(
+                                          color: Colors.white,
+                                          fontSize:
+                                              FontSize(appsize.size.width / 20),
+                                          fontFamily: GoogleFonts.vazirmatn()
+                                              .fontFamily,
                                         ),
-                                        textAlign: TextAlign.center,
-                                        color: Colors.white70,
-                                        fontSize:
-                                            FontSize(appsize.size.width / 23),
-                                        fontFamily:
-                                            GoogleFonts.vazirmatn().fontFamily,
-                                      ),
-                                    },
+                                        "h2": Style(
+                                          fontSize:
+                                              FontSize(appsize.size.width / 15),
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.amber,
+                                          fontFamily: GoogleFonts.elMessiri()
+                                              .fontFamily,
+                                        ),
+                                        "p": Style(
+                                            textAlign: TextAlign.justify,
+                                            lineHeight: LineHeight(
+                                                appsize.size.height / 350)),
+                                        "strong": Style(
+                                          fontFamily: GoogleFonts.vazirmatn()
+                                              .fontFamily,
+                                          lineHeight: LineHeight(
+                                              appsize.size.height / 350),
+                                          color: Colors.white70,
+                                        ),
+                                        "blockquote": Style(
+                                          backgroundColor: Colors.black26,
+                                          padding: HtmlPaddings.all(10),
+                                          border: Border.symmetric(
+                                            vertical: BorderSide(
+                                                color: Colors.amber, width: 3),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                          color: Colors.white70,
+                                          fontSize:
+                                              FontSize(appsize.size.width / 23),
+                                          fontFamily: GoogleFonts.vazirmatn()
+                                              .fontFamily,
+                                        ),
+                                      },
+                                    ),
                                   ),
                                 ),
                               );

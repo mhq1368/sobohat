@@ -14,9 +14,9 @@ late DetailNamazTaghebatController controllerDetail;
 late int nid;
 late String nname;
 
-class PrayerDetailPage extends StatefulWidget {
+class TestRefershPage extends StatefulWidget {
   final args = Get.arguments as Map<String, dynamic>;
-  PrayerDetailPage({super.key}) {
+  TestRefershPage({super.key}) {
     controllerDetail = Get.put(DetailNamazTaghebatController());
     // Get.arguments برای گرفتن آرگومان هایی که از صفحه قبل به این صفحه پاس داده شده اند
     nid = args['id'];
@@ -24,10 +24,10 @@ class PrayerDetailPage extends StatefulWidget {
   }
 
   @override
-  State<PrayerDetailPage> createState() => _PrayerDetailPageState();
+  State<TestRefershPage> createState() => _TestRefershPageState();
 }
 
-class _PrayerDetailPageState extends State<PrayerDetailPage> {
+class _TestRefershPageState extends State<TestRefershPage> {
   //تابع بروزرسانی لیست تعقیبات
   Future<void> _referesh() async {
     await Future.delayed(Duration(seconds: 2));

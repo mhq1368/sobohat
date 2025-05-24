@@ -4,7 +4,10 @@ class UrlConst {
   // static const String baseUrl = 'https://apisobohat.kala210.ir/api/';
   static const String baseUrl = 'https://sobohat.mahfannavar.ir/api/';
 
-  static const String namazList = '${baseUrl}Namaz';
+  static const String namazList = '${baseUrl}Namaz/';
   static const String zekrList = '${baseUrl}Zekr/';
   static const String matnList = '${baseUrl}MatnDoa/';
+
+  static const String fileUrl =
+      'https://dlfile.qassabi.ir/api/Sobohat_TaghebatApp/Taghebat_Files/Description/Description_App.html';
 }

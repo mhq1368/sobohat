@@ -26,12 +26,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> testApiConnection() async {
     try {
-      final response =
-          await dio.get(UrlConst.namazList).timeout(Duration(minutes: 60));
+      final response = await dio.get(UrlConst.namazList);
 
       if (response.statusCode == 200) {
         //صبر اجباری
-        await Future.delayed(Duration(seconds: 10));
+        await Future.delayed(Duration(seconds: 2));
         // اگر API در دسترس بود، به صفحه اصلی برو
         Get.offNamed(AppRoutes.home);
       }
@@ -58,7 +57,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     final responsive = ResponsiveHelper(context);
-    var sizeapp = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         body: Container(

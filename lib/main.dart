@@ -3,18 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sobohat/Controllers/theme_controller.dart';
-import 'package:sobohat/Views/about_page_views.dart';
+import 'package:sobohat/Views/description_app.dart';
 import 'package:sobohat/Views/home_page_views.dart';
 import 'package:sobohat/Views/matn_doaa_views.dart';
 import 'package:sobohat/Views/prayer_detail_page_views.dart';
 import 'package:sobohat/Views/splash_screen.dart';
 
 void main() {
-  runApp(
-    PrayerApp(),
-  );
   WidgetsFlutterBinding.ensureInitialized();
-
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     systemNavigationBarColor: Colors.teal.withAlpha(100),
     systemNavigationBarIconBrightness: Brightness.light,
@@ -26,6 +22,9 @@ void main() {
     systemStatusBarContrastEnforced: true,
   ));
   Get.put(ThemeController());
+  runApp(
+    PrayerApp(),
+  );
 }
 
 class PrayerApp extends StatelessWidget {
@@ -43,8 +42,8 @@ class PrayerApp extends StatelessWidget {
         GetPage(name: AppRoutes.splash, page: () => SplashScreen()),
         GetPage(name: AppRoutes.home, page: () => HomePage()),
         GetPage(name: AppRoutes.detail, page: () => PrayerDetailPage()),
-        GetPage(name: AppRoutes.about, page: () => AboutPage()),
         GetPage(name: AppRoutes.matn, page: () => MatnDoaaViews()),
+        GetPage(name: AppRoutes.about, page: () => DescriptionPage()),
       ],
     );
   }
@@ -57,4 +56,5 @@ class AppRoutes {
   static const String detail = '/detail';
   static const String matn = '/matn';
   static const String about = '/about';
+  static const String test = '/test';
 }

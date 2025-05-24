@@ -22,6 +22,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final deviceSizeIcons = deviceBasedSizeIcons(context);
+
     var appsize = MediaQuery.of(context);
     final responsive = ResponsiveHelper(context);
     return Scaffold(
@@ -50,7 +51,7 @@ class HomePage extends StatelessWidget {
             ),
             Expanded(
               child: Padding(
-                padding: responsive.scaledPaddingLTRB(15, 10, 15, 0),
+                padding: responsive.scaledPaddingLTRB(15, 10, 15, 10),
                 child: Obx(() {
                   if (namazController.namazList.isNotEmpty) {
                     return GridView.builder(

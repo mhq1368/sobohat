@@ -34,23 +34,20 @@ android {
         versionName = flutter.versionName
     }
     
-        signingConfigs {
-                    release {
-                        keyAlias keystoreProperties['keyAlias']
-                        keyPassword keystoreProperties['keyPassword']
-                        storeFile file(keystoreProperties['storeFile'])
-                        storePassword keystoreProperties['storePassword']
-                    }
-                }
+     signingConfigs {
+    release {
+        if (keystorePropertiesFile.exists()) {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+}
 
 
-    // buildTypes {
-    //     release {
-    //         // TODO: Add your own signing config for the release build.
-    //         // Signing with the debug keys for now, so `flutter run --release` works.
-    //         signingConfig = signingConfigs.debug
-    //     }
-    // }
+
+   
         buildTypes {
                 release {
                     signingConfig signingConfigs.release
@@ -69,13 +66,8 @@ android {
             def versionName = variant.versionName
             def versionCode = variant.versionCode
             def buildType = variant.buildType.name
-            if(variant.buildType.name=="release")
-                {
-                output.outputFileName = "سُبُحات.apk"
-                }
-                else if (output.outputFileName != null && output.outputFileName.endsWith('.apk')) {
-                output.outputFileName = "${appName}_${buildType}_v${versionName}(${versionCode}).apk"
-            }
+            
+            def fileName = "${appName}_${versionName}_${versionCode}_${buildType}.apk"
         
         }
     }
