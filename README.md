@@ -31,7 +31,7 @@
 
 ### **Backend**
 - [ASP.NET Core](https://learn.microsoft.com/aspnet/core) – API اختصاصی برای مدیریت محتوا
-
+- https://github.com/mhq1368/sobohat_Backend - آدرس بک اند پروژه
 ---
 
 
@@ -78,6 +78,7 @@ The backend is developed with **ASP.NET Core** and uses a **custom API** to mana
 
 ### **Backend**
 - [ASP.NET Core](https://learn.microsoft.com/aspnet/core) – Custom API for managing content
+- https://github.com/mhq1368/sobohat_Backend - BackEndAdress API For This Project
 
 ---
 
